@@ -7,12 +7,18 @@ function App() {
   const [pattern, setPattern] = useState("");
   const [field, setField] = useState([]);
 
-  const existField = field.length !== 0;
+  const existField = field.length !== 0; // test of existing of field
+
+  const handleKeyPress = (event) => {
+    if(event.key === 'Enter'){
+      setPattern(command.match(/[^\s]/)[0]);
+    }
+  }
 
   useEffect(() => {
     if (pattern === "C") {
-      const x = command.match(/\d{1,}/g)[0];
-      const y = command.match(/\d{1,}/g)[1];
+      const x = command.match(/\d{1,}/g)[0] >= 0 ? command.match(/\d{1,}/g)[0] : 0;
+      const y = command.match(/\d{1,}/g)[1] >= 0 ? command.match(/\d{1,}/g)[1] : 0;
       const fieldArray = [];
       const array = [];
       array.length = y;
@@ -21,37 +27,63 @@ function App() {
         fieldArray.push([...array]);
       }
       setField(fieldArray);
+      setPattern("");
     } else if (pattern === "L" && existField) {
-      const x1 = command.match(/\d{1,}/g)[0];
-      const y1 = command.match(/\d{1,}/g)[1];
-      const x2 = command.match(/\d{1,}/g)[2];
-      const y2 = command.match(/\d{1,}/g)[3];
+
+      const lengthX = field.length;
+      const lengthY = field[0].length;
+
+      const x1 = command.match(/\d{1,}/g)[0] - 1 >= 0 ? command.match(/\d{1,}/g)[0] - 1 : 0;
+      const y1 = command.match(/\d{1,}/g)[1] - 1 >= 0 ? command.match(/\d{1,}/g)[1] - 1 : 0;
+      const x2 = command.match(/\d{1,}/g)[2] - 1 >= 0 ? command.match(/\d{1,}/g)[2] - 1 : 0;
+      const y2 = command.match(/\d{1,}/g)[3] - 1 >= 0 ? command.match(/\d{1,}/g)[3] - 1 : 0;
+
+      //test for correct numbers
+      if((x1+1) > lengthX ||( x2+1) > lengthX || (y1+1) > lengthY || (y2+1) > lengthY)
+      {
+        alert('You inputed wrong numbers'); 
+        setPattern("");
+        return ()=>{}
+      }
 
       const fieldArray = field;
 
       if (x1 === x2 && y1 !== y2) {
-        //logick for vertical line
+        //logic for vertical line
         const dominateY = y1 - y2;
+
 
         if (dominateY < 0 && existField) {
           for (let index = y1; index <= y2; index++) {
             fieldArray[x1][index] = "X";
           }
-          console.log('сработал Y вниз');
         } else if (dominateY > 0 && existField) {
-          for (let index = y2; index >= y1; index--) {
+           
+          for (let index = y1;  y2 <= index; index--) {
             fieldArray[x1][index] = "X";
           }
-          console.log('сработал Y вверх');
         }
       } else if (x1 !== x2 && y1 === y2) {
-        //logick for horizontal line
+        //logic for horizontal line
+
+        const dominateX = x1 - x2;
+
+        if (dominateX < 0 && existField) {
+          for (let index = x1; index <= x2; index++) {
+            fieldArray[index][y1] = "X";
+          }
+        } else if (dominateX > 0 && existField) {
+          for (let index = x1; index >= x2; index--) {
+            fieldArray[index][y1] = "X";
+          }
+        }
       } else if (x1 === x2 && y1 === y2) {
-        //logick for point
+        fieldArray[x1][y1] = "X";
       } else {
         console.log("error pattern L");
       }
       setField(fieldArray);
+      setPattern("");
     } else if (pattern === "R") {
       console.log();
     } else if (pattern === "B") {
@@ -60,16 +92,10 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pattern]);
 
-  useEffect(()=>{
-    console.log('сработал field');
-    console.log(field);
-
-  },[field])
-
   return (
     <div className="App">
       <div className="mainInterface">
-        <input onChange={e => setCommand(e.target.value)} value={command} />
+        <input onChange={e => setCommand(e.target.value)} value={command} onKeyPress={handleKeyPress}/>
         <button
           onClick={() => {
             setPattern(command.match(/[^\s]/)[0]);
@@ -82,20 +108,14 @@ function App() {
       <div className="mailField">
         {field.map((el, column) => (
           <div>
-            {el.map((el2, cell) => {
-              if(pattern === "L")
-              {
-                console.log(el2);
-              }
-              return (
-                <Sector
-                  x={column}
-                  y={cell}
-                  bcg={el2}
-                  key={column +' '+ cell + "sector"}
-                />
-              );
-            })}
+            {el.map((el2, cell) => (
+              <Sector
+                x={column}
+                y={cell}
+                bcg={el2}
+                key={column + " " + cell + "sector"}
+              />
+            ))}
           </div>
         ))}
       </div>
