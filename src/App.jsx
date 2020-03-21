@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sector from "./components/Sector";
+import {drawLine} from './drawFunctions'
 import "./App.css";
 
 function App() {
@@ -14,6 +15,22 @@ function App() {
       setPattern(command.match(/[^\s]/)[0]);
     }
   }
+  const checkCountsWithLengthField = (x1, x2, y1 ,y2) =>
+  {
+    const lengthX = field.length;
+    const lengthY = field[0].length;
+
+    if((x1+1) > lengthX ||( x2+1) > lengthX || (y1+1) > lengthY || (y2+1) > lengthY)
+    {
+      alert('You inputed wrong numbers'); 
+      setPattern("");
+      return true
+    }
+    else
+    {
+      return false
+    }
+  };
 
   useEffect(() => {
     if (pattern === "C") {
@@ -28,10 +45,9 @@ function App() {
       }
       setField(fieldArray);
       setPattern("");
-    } else if (pattern === "L" && existField) {
+    } else if (pattern === "L") {
 
-      const lengthX = field.length;
-      const lengthY = field[0].length;
+      if (!existField) return ()=>{}
 
       const x1 = command.match(/\d{1,}/g)[0] - 1 >= 0 ? command.match(/\d{1,}/g)[0] - 1 : 0;
       const y1 = command.match(/\d{1,}/g)[1] - 1 >= 0 ? command.match(/\d{1,}/g)[1] - 1 : 0;
@@ -39,55 +55,27 @@ function App() {
       const y2 = command.match(/\d{1,}/g)[3] - 1 >= 0 ? command.match(/\d{1,}/g)[3] - 1 : 0;
 
       //test for correct numbers
-      if((x1+1) > lengthX ||( x2+1) > lengthX || (y1+1) > lengthY || (y2+1) > lengthY)
-      {
-        alert('You inputed wrong numbers'); 
-        setPattern("");
-        return ()=>{}
-      }
+      if (checkCountsWithLengthField(x1, x2, y1, y2)) return ()=>{};
 
-      const fieldArray = field;
-
-      if (x1 === x2 && y1 !== y2) {
-        //logic for vertical line
-        const dominateY = y1 - y2;
-
-
-        if (dominateY < 0 && existField) {
-          for (let index = y1; index <= y2; index++) {
-            fieldArray[x1][index] = "X";
-          }
-        } else if (dominateY > 0 && existField) {
-           
-          for (let index = y1;  y2 <= index; index--) {
-            fieldArray[x1][index] = "X";
-          }
-        }
-      } else if (x1 !== x2 && y1 === y2) {
-        //logic for horizontal line
-
-        const dominateX = x1 - x2;
-
-        if (dominateX < 0 && existField) {
-          for (let index = x1; index <= x2; index++) {
-            fieldArray[index][y1] = "X";
-          }
-        } else if (dominateX > 0 && existField) {
-          for (let index = x1; index >= x2; index--) {
-            fieldArray[index][y1] = "X";
-          }
-        }
-      } else if (x1 === x2 && y1 === y2) {
-        fieldArray[x1][y1] = "X";
-      } else {
-        console.log("error pattern L");
-      }
+      const fieldArray = drawLine(field, x1, x2, y1, y2);
       setField(fieldArray);
       setPattern("");
     } else if (pattern === "R") {
-      console.log();
+
+      if (existField) return ()=>{}
+
+      const x1 = command.match(/\d{1,}/g)[0] - 1 >= 0 ? command.match(/\d{1,}/g)[0] - 1 : 0;
+      const y1 = command.match(/\d{1,}/g)[1] - 1 >= 0 ? command.match(/\d{1,}/g)[1] - 1 : 0;
+      const x2 = command.match(/\d{1,}/g)[2] - 1 >= 0 ? command.match(/\d{1,}/g)[2] - 1 : 0;
+      const y2 = command.match(/\d{1,}/g)[3] - 1 >= 0 ? command.match(/\d{1,}/g)[3] - 1 : 0;
+
+      //test for correct numbers
+      if (checkCountsWithLengthField(x1, x2, y1, y2)) return ()=>{};
+
+      setPattern("");
     } else if (pattern === "B") {
       console.log();
+      setPattern("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pattern]);
@@ -119,9 +107,6 @@ function App() {
           </div>
         ))}
       </div>
-      <mark style={{ right: 1001 + "px", position: "relative" }}>
-        1 {pattern} 1
-      </mark>
     </div>
   );
 }
