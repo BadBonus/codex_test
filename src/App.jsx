@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Sector from "./components/Sector";
-import {drawLine} from './drawFunctions'
+import {drawLine} from './functions/drawFunctions'
+import {checkCountsWithLengthField, checkInputsRectangle} from './functions/checkFunctions'
+
 import "./App.css";
 
 function App() {
@@ -15,22 +17,7 @@ function App() {
       setPattern(command.match(/[^\s]/)[0]);
     }
   }
-  const checkCountsWithLengthField = (x1, x2, y1 ,y2) =>
-  {
-    const lengthX = field.length;
-    const lengthY = field[0].length;
-
-    if((x1+1) > lengthX ||( x2+1) > lengthX || (y1+1) > lengthY || (y2+1) > lengthY)
-    {
-      alert('You inputed wrong numbers'); 
-      setPattern("");
-      return true
-    }
-    else
-    {
-      return false
-    }
-  };
+  
 
   useEffect(() => {
     if (pattern === "C") {
@@ -54,8 +41,12 @@ function App() {
       const x2 = command.match(/\d{1,}/g)[2] - 1 >= 0 ? command.match(/\d{1,}/g)[2] - 1 : 0;
       const y2 = command.match(/\d{1,}/g)[3] - 1 >= 0 ? command.match(/\d{1,}/g)[3] - 1 : 0;
 
-      //test for correct numbers
-      if (checkCountsWithLengthField(x1, x2, y1, y2)) return ()=>{};
+      //test for correct inputs
+      if (checkCountsWithLengthField(field, x1, x2, y1, y2)) 
+      {
+        setPattern("");
+        return ()=>{}
+      }
 
       const fieldArray = drawLine(field, x1, x2, y1, y2);
       setField(fieldArray);
@@ -69,8 +60,12 @@ function App() {
       const x2 = command.match(/\d{1,}/g)[2] - 1 >= 0 ? command.match(/\d{1,}/g)[2] - 1 : 0;
       const y2 = command.match(/\d{1,}/g)[3] - 1 >= 0 ? command.match(/\d{1,}/g)[3] - 1 : 0;
 
-      //test for correct numbers
-      if (checkCountsWithLengthField(x1, x2, y1, y2)) return ()=>{};
+      //test for correct inputs
+      if (checkCountsWithLengthField(field, x1, x2, y1, y2) || checkInputsRectangle(x1, x2, y1, y2))
+      {
+        setPattern("");
+        return () => {}
+      }
 
       setPattern("");
     } else if (pattern === "B") {
