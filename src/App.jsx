@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sector from "./components/Sector";
-import {drawLine, drawRect} from './functions/drawFunctions'
+import {drawLine, drawRect, fillFigure} from './functions/drawFunctions'
 import {checkCountsWithLengthField, checkInputsRectangle} from './functions/checkFunctions'
 
 import "./App.css";
@@ -32,9 +32,7 @@ function App() {
       }
       setField(fieldArray);
       setPattern("");
-    } else if (pattern === "L") {
-
-      if (!existField) return ()=>{};
+    } else if (pattern === "L" && existField) {
 
       const x1 = command.match(/\d{1,}/g)[0] - 1 >= 0 ? command.match(/\d{1,}/g)[0] - 1 : 0;
       const y1 = command.match(/\d{1,}/g)[1] - 1 >= 0 ? command.match(/\d{1,}/g)[1] - 1 : 0;
@@ -51,9 +49,7 @@ function App() {
       const fieldArray = drawLine(field, x1, x2, y1, y2);
       setField(fieldArray);
       setPattern("");
-    } else if (pattern === "R") {
-      console.log('patter R');
-      if (!existField) return ()=>{};
+    } else if (pattern === "R" && existField) {
 
       const x1 = command.match(/\d{1,}/g)[0] - 1 >= 0 ? command.match(/\d{1,}/g)[0] - 1 : 0;
       const y1 = command.match(/\d{1,}/g)[1] - 1 >= 0 ? command.match(/\d{1,}/g)[1] - 1 : 0;
@@ -71,8 +67,25 @@ function App() {
       setField(fieldArray);
 
       setPattern("");
-    } else if (pattern === "B") {
-      console.log();
+    } else if (pattern === "B" && existField) {
+
+      const x = command.match(/\d+/g)[0] - 1 >= 0 ? command.match(/\d+/g)[0] - 1 : 0;
+      const y = command.match(/\d+/g)[1] - 1 >= 0 ? command.match(/\d+/g)[1] - 1 : 0;
+      const bcg = command.match(/\w/g)[3];
+      //#доработка добавить проверку на вождение в границы поля
+      if (checkCountsWithLengthField)
+      {
+        setPattern("");
+        return () => {}
+      }
+      //отсаженные
+      const outseated = [];
+
+      console.log(bcg);
+      console.log(x);
+      console.log(y);
+      console.log('==== and now borders! ====');
+      let borders = fillFigure(field, x, y);
       setPattern("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

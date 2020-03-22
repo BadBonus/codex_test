@@ -23,7 +23,7 @@
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="terminal" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -66,6 +66,8 @@
       <updated>1584881649243</updated>
       <workItem from="1584881654929" duration="1967000" />
       <workItem from="1584883720130" duration="1447000" />
+      <workItem from="1584885207962" duration="3305000" />
+      <workItem from="1584904962979" duration="5992000" />
     </task>
     <servers />
   </component>
