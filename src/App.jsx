@@ -72,6 +72,7 @@ function App() {
       const x = command.match(/\d+/g)[0] - 1 >= 0 ? command.match(/\d+/g)[0] - 1 : 0;
       const y = command.match(/\d+/g)[1] - 1 >= 0 ? command.match(/\d+/g)[1] - 1 : 0;
       const bcg = command.match(/\w/g)[3];
+      const addingStartPoints = [];
       if (bcg === undefined)
       {
         alert('input background pls, you can input any string expression');
@@ -86,7 +87,8 @@ function App() {
       }
 
       console.log('==== and now borders! ====');
-      let borders = fillFigure(field, x, y);
+      let {particallyFilled:updatedField, outseated} = fillFigure(field, x, y, bcg);
+      setField(updatedField);
       setPattern("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

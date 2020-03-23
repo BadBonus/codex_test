@@ -59,6 +59,7 @@ export const drawRect = (field, x1, x2, y1, y2) => {
 };
 
 //#start helper fun-s for fillFigure
+
 const findBorders = (field, x, y, direction) => {
     let leftX = 0;
     let topY = 0;
@@ -144,27 +145,50 @@ const markSectors = (borders, entryPoint, field) =>
     }
     return {verticalArray, horizontalArray};
 };
+
+const filterHorizAndVerticArrays = (summaryArray, anotherArray) => {
+    return anotherArray.filter(el=>!summaryArray.some(sEl => (el.x === sEl.x && el.y === sEl.y)));
+};
+
+const particallyFilling = (localField, arrayOfElements, bcg) =>
+{
+    const updatedLocalField = [...localField];
+    arrayOfElements.forEach(el=>{
+        updatedLocalField[el.x][el.y] = bcg;
+    });
+
+    return updatedLocalField;
+};
 //#end helper fun-s for fillFigure
 
 export const fillFigure = (field, x, y, bcg) => {
+
 //array for another starts points from algorithm
-    const outseated = [];
-    let localField = field;
+    let outseated = [];
+    let conjunctionArray = [];
+    let localField = [...field];
 
     //find border points
     let toBordersSteps = findBorders(field, x, y, 'all');
 
     const {verticalArray, horizontalArray}=markSectors(toBordersSteps, {x:x, y:y} ,localField);
-    console.log(verticalArray);
-    console.log(horizontalArray);
 
-    const test = verticalArray.filter((elV)=>{
-
-        return horizontalArray.some((elH)=>{
+    conjunctionArray = verticalArray.filter((elV)=>{
+        return (horizontalArray.some((elH)=>{
             return (elV.x===elH.x && elV.y === elH.y)
-        });
+        }));
     });
 
-    console.log(test);
+    let unicArray1 = filterHorizAndVerticArrays(conjunctionArray, verticalArray);
+    let unicArray2 = filterHorizAndVerticArrays(conjunctionArray, horizontalArray);
+    outseated = [...unicArray1, ...unicArray2];
+    localField = particallyFilling(localField, conjunctionArray, bcg);
 
+    if (outseated.length !==0)
+    {
+
+    }
+
+
+    return {particallyFilled:localField, outseated};
 };
