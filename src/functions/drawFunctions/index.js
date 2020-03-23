@@ -161,34 +161,42 @@ const particallyFilling = (localField, arrayOfElements, bcg) =>
 };
 //#end helper fun-s for fillFigure
 
-export const fillFigure = (field, x, y, bcg) => {
+export const fillFigure = (field, startx, starty, bcg) => {
 
 //array for another starts points from algorithm
-    let outseated = [];
+    let points = [{x:startx, y:starty}];
     let conjunctionArray = [];
     let localField = [...field];
 
-    //find border points
-    let toBordersSteps = findBorders(field, x, y, 'all');
-
-    const {verticalArray, horizontalArray}=markSectors(toBordersSteps, {x:x, y:y} ,localField);
-
-    conjunctionArray = verticalArray.filter((elV)=>{
-        return (horizontalArray.some((elH)=>{
-            return (elV.x===elH.x && elV.y === elH.y)
-        }));
-    });
-
-    let unicArray1 = filterHorizAndVerticArrays(conjunctionArray, verticalArray);
-    let unicArray2 = filterHorizAndVerticArrays(conjunctionArray, horizontalArray);
-    outseated = [...unicArray1, ...unicArray2];
-    localField = particallyFilling(localField, conjunctionArray, bcg);
-
-    if (outseated.length !==0)
+    while (points.length !== 0)
     {
+        const {x, y} = points[0];
+        //find border points
+        let toBordersSteps = findBorders(field, x, y, 'all');
+        const {verticalArray, horizontalArray}=markSectors(toBordersSteps, {x, y} ,localField);
+        conjunctionArray = verticalArray.filter((elV)=>{
+            return (horizontalArray.some((elH)=>{
+                return (elV.x===elH.x && elV.y === elH.y)
+            }));
+        });
 
+        let unicArray1 = filterHorizAndVerticArrays(conjunctionArray, verticalArray);
+        let unicArray2 = filterHorizAndVerticArrays(conjunctionArray, horizontalArray);
+        //Вот тут мы должны проверять поинты
+        points = [...points,...unicArray1, ...unicArray2];
+
+        // eslint-disable-next-line no-loop-func
+        points = points.filter((point)=>{
+            console.log(point);
+            return !(conjunctionArray.some(el=> (el.x === point.x && el.y === point.y)));
+        });
+
+        localField = particallyFilling(localField, conjunctionArray, bcg);
     }
 
 
-    return {particallyFilled:localField, outseated};
+
+
+
+    return localField;
 };

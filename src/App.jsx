@@ -87,7 +87,7 @@ function App() {
       }
 
       console.log('==== and now borders! ====');
-      let {particallyFilled:updatedField, outseated} = fillFigure(field, x, y, bcg);
+      let updatedField = fillFigure(field, x, y, bcg);
       setField(updatedField);
       setPattern("");
     }
