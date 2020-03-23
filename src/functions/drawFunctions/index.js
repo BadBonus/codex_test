@@ -83,30 +83,26 @@ const findBorders = (field, x, y, direction) => {
     };
 
     //find left border
-    if (direction === 'all' || direction === 'left')
-    {
+    if (direction === 'all' || direction === 'left') {
         while (checkLeftX() === initialBcg) {
             leftX++;
         }
     }
-    if (direction === 'all' || direction === 'right')
-    {
+    if (direction === 'all' || direction === 'right') {
         //find right border
         while (checkRightX() === initialBcg) {
             rightX++;
         }
     }
     //find top border
-    if (direction === 'all' || direction === 'top')
-    {
+    if (direction === 'all' || direction === 'top') {
         while (checkTopY() === initialBcg) {
             topY++;
         }
     }
 
     //find bottom border
-    if (direction === 'all' || direction === 'bottom')
-    {
+    if (direction === 'all' || direction === 'bottom') {
         while (checkBottomY() === initialBcg) {
             bottomY++;
         }
@@ -114,46 +110,40 @@ const findBorders = (field, x, y, direction) => {
     return {leftX: leftX - 1, topY: topY - 1, rightX: rightX - 1, bottomY: bottomY - 1} //-1 because algorithm
 };
 
-const markSectors = (borders, entryPoint, field) =>
-{
+const markSectors = (borders, entryPoint, field) => {
     const verticalArray = [];
     const horizontalArray = [];
     const {x, y} = entryPoint;
     let localField = field;
-    const {leftX: startX, rightX:endX, topY:startY, bottomY: endY} = borders;
+    const {leftX: startX, rightX: endX, topY: startY, bottomY: endY} = borders;
     //vertical elements
-    for (let i = x-startX; i <= x+endX; i++)
-    {
+    for (let i = x - startX; i <= x + endX; i++) {
         const {topY} = findBorders(localField, i, y, 'top');
         const {bottomY} = findBorders(localField, i, y, 'bottom');
 
-        for (let topPoint = y-topY; topPoint <= y+bottomY; topPoint++)
-        {
-            verticalArray.push({x:i, y:topPoint, bcg: localField[i][topPoint]});
+        for (let topPoint = y - topY; topPoint <= y + bottomY; topPoint++) {
+            verticalArray.push({x: i, y: topPoint, bcg: localField[i][topPoint]});
         }
     }
     //horizontal elements
-    for (let i = y - startY; i <= y+endY; i++)
-    {
+    for (let i = y - startY; i <= y + endY; i++) {
         const {leftX} = findBorders(localField, x, i, 'left');
         const {rightX} = findBorders(localField, x, i, 'right');
 
-        for (let leftPoint = x-leftX; leftPoint <= x+rightX; leftPoint++)
-        {
-            horizontalArray.push({x:leftPoint, y:i, bcg: localField[leftPoint][i]});
+        for (let leftPoint = x - leftX; leftPoint <= x + rightX; leftPoint++) {
+            horizontalArray.push({x: leftPoint, y: i, bcg: localField[leftPoint][i]});
         }
     }
     return {verticalArray, horizontalArray};
 };
 
 const filterHorizAndVerticArrays = (summaryArray, anotherArray) => {
-    return anotherArray.filter(el=>!summaryArray.some(sEl => (el.x === sEl.x && el.y === sEl.y)));
+    return anotherArray.filter(el => !summaryArray.some(sEl => (el.x === sEl.x && el.y === sEl.y)));
 };
 
-const particallyFilling = (localField, arrayOfElements, bcg) =>
-{
+const particallyFilling = (localField, arrayOfElements, bcg) => {
     const updatedLocalField = [...localField];
-    arrayOfElements.forEach(el=>{
+    arrayOfElements.forEach(el => {
         updatedLocalField[el.x][el.y] = bcg;
     });
 
@@ -164,39 +154,34 @@ const particallyFilling = (localField, arrayOfElements, bcg) =>
 export const fillFigure = (field, startx, starty, bcg) => {
 
 //array for another starts points from algorithm
-    let points = [{x:startx, y:starty}];
+    let points = [{x: startx, y: starty}];
     let conjunctionArray = [];
     let localField = [...field];
 
-    while (points.length !== 0)
-    {
+    while (points.length !== 0) {
         const {x, y} = points[0];
         //find border points
         let toBordersSteps = findBorders(field, x, y, 'all');
-        const {verticalArray, horizontalArray}=markSectors(toBordersSteps, {x, y} ,localField);
-        conjunctionArray = verticalArray.filter((elV)=>{
-            return (horizontalArray.some((elH)=>{
-                return (elV.x===elH.x && elV.y === elH.y)
+        const {verticalArray, horizontalArray} = markSectors(toBordersSteps, {x, y}, localField);
+        conjunctionArray = verticalArray.filter((elV) => {
+            return (horizontalArray.some((elH) => {
+                return (elV.x === elH.x && elV.y === elH.y)
             }));
         });
 
         let unicArray1 = filterHorizAndVerticArrays(conjunctionArray, verticalArray);
         let unicArray2 = filterHorizAndVerticArrays(conjunctionArray, horizontalArray);
         //Вот тут мы должны проверять поинты
-        points = [...points,...unicArray1, ...unicArray2];
+        points = [...points, ...unicArray1, ...unicArray2];
 
         // eslint-disable-next-line no-loop-func
-        points = points.filter((point)=>{
+        points = points.filter((point) => {
             console.log(point);
-            return !(conjunctionArray.some(el=> (el.x === point.x && el.y === point.y)));
+            return !(conjunctionArray.some(el => (el.x === point.x && el.y === point.y)));
         });
 
         localField = particallyFilling(localField, conjunctionArray, bcg);
     }
-
-
-
-
 
     return localField;
 };
