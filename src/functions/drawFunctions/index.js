@@ -110,24 +110,61 @@ const findBorders = (field, x, y, direction) => {
             bottomY++;
         }
     }
-
     return {leftX: leftX - 1, topY: topY - 1, rightX: rightX - 1, bottomY: bottomY - 1} //-1 because algorithm
+};
+
+const markSectors = (borders, entryPoint, field) =>
+{
+    const verticalArray = [];
+    const horizontalArray = [];
+    const {x, y} = entryPoint;
+    let localField = field;
+    const {leftX: startX, rightX:endX, topY:startY, bottomY: endY} = borders;
+    //vertical elements
+    for (let i = x-startX; i <= x+endX; i++)
+    {
+        const {topY} = findBorders(localField, i, y, 'top');
+        const {bottomY} = findBorders(localField, i, y, 'bottom');
+
+        for (let topPoint = y-topY; topPoint <= y+bottomY; topPoint++)
+        {
+            verticalArray.push({x:i, y:topPoint, bcg: localField[i][topPoint]});
+        }
+    }
+    //horizontal elements
+    for (let i = y - startY; i <= y+endY; i++)
+    {
+        const {leftX} = findBorders(localField, x, i, 'left');
+        const {rightX} = findBorders(localField, x, i, 'right');
+
+        for (let leftPoint = x-leftX; leftPoint <= x+rightX; leftPoint++)
+        {
+            horizontalArray.push({x:leftPoint, y:i, bcg: localField[leftPoint][i]});
+        }
+    }
+    return {verticalArray, horizontalArray};
 };
 //#end helper fun-s for fillFigure
 
 export const fillFigure = (field, x, y, bcg) => {
 //array for another starts points from algorithm
     const outseated = [];
+    let localField = field;
 
     //find border points
-    let {
-        leftX,
-        topY,
-        rightX,
-        bottomY
-    } = findBorders(field, x, y, 'all');
+    let toBordersSteps = findBorders(field, x, y, 'all');
 
+    const {verticalArray, horizontalArray}=markSectors(toBordersSteps, {x:x, y:y} ,localField);
+    console.log(verticalArray);
+    console.log(horizontalArray);
 
+    const test = verticalArray.filter((elV)=>{
 
+        return horizontalArray.some((elH)=>{
+            return (elV.x===elH.x && elV.y === elH.y)
+        });
+    });
+
+    console.log(test);
 
 };
