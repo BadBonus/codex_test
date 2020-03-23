@@ -72,18 +72,19 @@ function App() {
       const x = command.match(/\d+/g)[0] - 1 >= 0 ? command.match(/\d+/g)[0] - 1 : 0;
       const y = command.match(/\d+/g)[1] - 1 >= 0 ? command.match(/\d+/g)[1] - 1 : 0;
       const bcg = command.match(/\w/g)[3];
+      if (bcg === undefined)
+      {
+        alert('input background pls, you can input any string expression');
+        setPattern("");
+        return () => {}
+      }
       //#доработка добавить проверку на вождение в границы поля
-      if (checkCountsWithLengthField)
+      if ( !checkCountsWithLengthField)
       {
         setPattern("");
         return () => {}
       }
-      //отсаженные
-      const outseated = [];
 
-      console.log(bcg);
-      console.log(x);
-      console.log(y);
       console.log('==== and now borders! ====');
       let borders = fillFigure(field, x, y);
       setPattern("");

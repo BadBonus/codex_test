@@ -59,29 +59,56 @@ export const drawRect = (field, x1, x2, y1, y2) => {
 };
 
 //#start helper fun-s for fillFigure
-const findBorders = (field, x, y) => {
+const findBorders = (field, x, y, direction) => {
     let leftX = 0;
     let topY = 0;
     let rightX = 0;
     let bottomY = 0;
     const initialBcg = field[x][y];
-    //#доделка сделать проверку на размеры поля
+    const lengthX = field[0].length;
+    const lengthY = field[0][0].length;
+    //Checks for size-out of field
+    const checkLeftX = () => {
+        return field[x - leftX] === undefined ? false : field[x - leftX][y];
+    };
+    const checkRightX = () => {
+        return field[x + rightX] === undefined ? false : field[x + rightX][y];
+    };
+    const checkTopY = () => {
+        return field[x][y - topY] === undefined ? false : field[x][y - topY];
+    };
+    const checkBottomY = () => {
+        return field[x][y + bottomY] === undefined ? false : field[x][y + bottomY];
+    };
 
     //find left border
-    while (field[x - leftX][y] === initialBcg) {
-        leftX++;
+    if (direction === 'all' || direction === 'left')
+    {
+        while (checkLeftX() === initialBcg) {
+            leftX++;
+        }
     }
-    //find right border
-    while (field[x + rightX][y] === initialBcg) {
-        rightX++;
+    if (direction === 'all' || direction === 'right')
+    {
+        //find right border
+        while (checkRightX() === initialBcg) {
+            rightX++;
+        }
     }
     //find top border
-    while (field[x][y - topY] === initialBcg) {
-        topY++;
+    if (direction === 'all' || direction === 'top')
+    {
+        while (checkTopY() === initialBcg) {
+            topY++;
+        }
     }
+
     //find bottom border
-    while (field[x][y + bottomY] === initialBcg) {
-        bottomY++;
+    if (direction === 'all' || direction === 'bottom')
+    {
+        while (checkBottomY() === initialBcg) {
+            bottomY++;
+        }
     }
 
     return {leftX: leftX - 1, topY: topY - 1, rightX: rightX - 1, bottomY: bottomY - 1} //-1 because algorithm
@@ -89,16 +116,18 @@ const findBorders = (field, x, y) => {
 //#end helper fun-s for fillFigure
 
 export const fillFigure = (field, x, y, bcg) => {
+//array for another starts points from algorithm
+    const outseated = [];
+
     //find border points
-    const {
+    let {
         leftX,
         topY,
         rightX,
         bottomY
-    } = findBorders(field, x, y);
+    } = findBorders(field, x, y, 'all');
 
-    console.log(leftX);
-    console.log(topY);
-  console.log(rightX);
-  console.log(bottomY);
+
+
+
 };
