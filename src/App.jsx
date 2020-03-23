@@ -71,7 +71,7 @@ function App() {
 
       const x = command.match(/\d+/g)[0] - 1 >= 0 ? command.match(/\d+/g)[0] - 1 : 0;
       const y = command.match(/\d+/g)[1] - 1 >= 0 ? command.match(/\d+/g)[1] - 1 : 0;
-      const bcg = command.match(/\w/g)[3];
+      let bcg = command.match(/\w+/g)[3];
       const addingStartPoints = [];
       if (bcg === undefined)
       {
@@ -79,14 +79,12 @@ function App() {
         setPattern("");
         return () => {}
       }
-      //#доработка добавить проверку на вождение в границы поля
       if ( !checkCountsWithLengthField)
       {
         setPattern("");
         return () => {}
       }
 
-      console.log('==== and now borders! ====');
       let updatedField = fillFigure(field, x, y, bcg);
       setField(updatedField);
       setPattern("");

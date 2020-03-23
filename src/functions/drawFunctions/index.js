@@ -38,23 +38,19 @@ export const drawLine = (field, x1, x2, y1, y2) => {
 
 
 export const drawRect = (field, x1, x2, y1, y2) => {
-    console.log('drawRect start');
     const fieldArray = field;
     //draw vertical lines
     for (let i = y1; i <= y2; i++) {
-        console.log('drawRect vertical');
 
         fieldArray[x1][i] = 'X';
         fieldArray[x2][i] = 'X';
     }
     //draw horizontal lines
     for (let i = x1; i <= x2; i++) {
-        console.log('drawRect horizontal');
 
         fieldArray[i][y1] = 'X';
         fieldArray[i][y2] = 'X';
     }
-    console.log(fieldArray);
     return fieldArray;
 };
 
@@ -173,13 +169,11 @@ export const fillFigure = (field, startx, starty, bcg) => {
         let unicArray2 = filterHorizAndVerticArrays(conjunctionArray, horizontalArray);
         //Вот тут мы должны проверять поинты
         points = [...points, ...unicArray1, ...unicArray2];
-
+        debugger
         // eslint-disable-next-line no-loop-func
         points = points.filter((point) => {
-            console.log(point);
             return !(conjunctionArray.some(el => (el.x === point.x && el.y === point.y)));
         });
-
         localField = particallyFilling(localField, conjunctionArray, bcg);
     }
 
