@@ -56,7 +56,7 @@ export const drawRect = (field, x1, x2, y1, y2) => {
 
 //#start helper fun-s for fillFigure
 
-const findBorders = (field, x, y, direction) => {
+export const findBorders = (field, x, y, direction) => {
     let leftX = 0;
     let topY = 0;
     let rightX = 0;
@@ -106,7 +106,7 @@ const findBorders = (field, x, y, direction) => {
     return {leftX: leftX - 1, topY: topY - 1, rightX: rightX - 1, bottomY: bottomY - 1} //-1 because algorithm
 };
 
-const markSectors = (borders, entryPoint, field) => {
+export const markSectors = (borders, entryPoint, field) => {
     const verticalArray = [];
     const horizontalArray = [];
     const {x, y} = entryPoint;
@@ -133,11 +133,11 @@ const markSectors = (borders, entryPoint, field) => {
     return {verticalArray, horizontalArray};
 };
 
-const filterHorizAndVerticArrays = (summaryArray, anotherArray) => {
+export const filterHorizAndVerticArrays = (summaryArray, anotherArray) => {
     return anotherArray.filter(el => !summaryArray.some(sEl => (el.x === sEl.x && el.y === sEl.y)));
 };
 
-const particallyFilling = (localField, arrayOfElements, bcg) => {
+export const particallyFilling = (localField, arrayOfElements, bcg) => {
     const updatedLocalField = [...localField];
     arrayOfElements.forEach(el => {
         updatedLocalField[el.x][el.y] = bcg;
@@ -169,7 +169,6 @@ export const fillFigure = (field, startx, starty, bcg) => {
         let unicArray2 = filterHorizAndVerticArrays(conjunctionArray, horizontalArray);
         //Вот тут мы должны проверять поинты
         points = [...points, ...unicArray1, ...unicArray2];
-        debugger
         // eslint-disable-next-line no-loop-func
         points = points.filter((point) => {
             return !(conjunctionArray.some(el => (el.x === point.x && el.y === point.y)));

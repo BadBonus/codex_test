@@ -2,22 +2,48 @@
 {
   transition: .3s;
 }
+.mainInterface {
+  text-align: center;
+  margin: 16px auto;
+}
+
+.mainInterface input
+{
+  border-radius: 19px;
+  border: 1px solid lightblue;
+  padding: 2px 8px;
+  color: rgba(0,0,0,0.5);
+}
+
+button
+{
+  border: 1px solid lightblue;
+  margin-left: 16px;
+  background: #1976d2;
+  border-radius: 4px;
+  color: #Fff;
+  padding: 2px 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
 .mailField
 {
-  background-color: #666;
   position: relative;
+  margin: auto;
 }
 .mailField-sector
 {
-  border: 1px dotted lightblue;
+  border: 1px solid tomato;
   background: #fff;
   width: 20px;
   height: 20px;
   text-align: center;
   font-size: 11px;
-  padding-top: 5px;
+  padding-top: 2px;
   position: absolute;
   cursor: pointer;
+  box-sizing: border-box;
+  border-radius: 100px;
 }
 .mailField-sector:hover
 {

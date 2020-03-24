@@ -2,10 +2,10 @@ export const checkCountsWithLengthField = (field, x1, x2, y1 = 0, y2 = 0) => {
     const lengthX = field.length;
     const lengthY = field[0].length;
 
-    if ((x1 + 1) > lengthX || (x2 + 1) > lengthX || (y1 + 1) > lengthY || (y2 + 1) > lengthY) {
+    if ((x1) > lengthX || (x2) > lengthX || (y1) > lengthY || (y2) > lengthY) {
         alert('You inputed wrong numbers');
         return true
-    } else if ((x1 + 1) < 0  || (x2 + 1) < 0 || (y1 + 1) < 0 || (y2 + 1) < 0) {
+    } else if ((x1) < 0  || (x2) < 0 || (y1) < 0 || (y2) < 0) {
         alert('You inputed uncorrected numbers');
         return true
     } else {

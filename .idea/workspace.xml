@@ -11,8 +11,18 @@
   <component name="FavoritesManager">
     <favorites_list name="test-lesson" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="ProjectId" id="1ZU77Cg1KC0hDR4a1lvmGLkLDCd" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -24,8 +34,9 @@
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs.jest.jest_package" value="$PROJECT_DIR$/node_modules/react-scripts" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -39,22 +50,90 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="start" />
-      </scripts>
+  <component name="RunManager" selected="Jest.draw functions.fillFigure">
+    <configuration name="check functions.checkInputsRectangle uncorrected x2" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
       <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
       <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/functions/checkFunctions/checkFunctions.test.js" />
+      <test-names>
+        <test-name value="check functions" />
+        <test-name value="checkInputsRectangle uncorrected x2" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="draw functions" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="SUITE" />
+      <test-file value="$PROJECT_DIR$/src/functions/drawFunctions/drawFunctions.test.js" />
+      <test-names>
+        <test-name value="draw functions" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="draw functions.drawLine" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/functions/drawFunctions/drawFunctions.test.js" />
+      <test-names>
+        <test-name value="draw functions" />
+        <test-name value="drawLine" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="draw functions.drawRect" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/functions/drawFunctions/drawFunctions.test.js" />
+      <test-names>
+        <test-name value="draw functions" />
+        <test-name value="drawRect" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="draw functions.fillFigure" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/react-scripts" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/src/functions/drawFunctions/drawFunctions.test.js" />
+      <test-names>
+        <test-name value="draw functions" />
+        <test-name value="fillFigure" />
+      </test-names>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.start" />
+        <item itemvalue="Jest.draw functions.fillFigure" />
+        <item itemvalue="Jest.draw functions.drawRect" />
+        <item itemvalue="Jest.draw functions" />
+        <item itemvalue="Jest.draw functions.drawLine" />
+        <item itemvalue="Jest.check functions.checkInputsRectangle uncorrected x2" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="StructuralSearchPlugin">
+    <searchConfiguration name="user defined" created="1585053116766" text="console" recursive="true" caseInsensitive="true" type="XML" scope_type="NAMED" scope_descriptor="All Places" history="1">
+      <constraint name="__context__" within="" contains="" />
+    </searchConfiguration>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -71,6 +150,7 @@
       <workItem from="1584885207962" duration="3305000" />
       <workItem from="1584904962979" duration="8009000" />
       <workItem from="1584948737863" duration="22608000" />
+      <workItem from="1585049760503" duration="11770000" />
     </task>
     <servers />
   </component>
